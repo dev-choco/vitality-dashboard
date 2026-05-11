@@ -2,7 +2,8 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "cli": {
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "analytics": "3bf311ea-4d56-434d-a018-f88da6d3277a"
   },
   "newProjectRoot": "projects",
   "projects": {
@@ -56,10 +57,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "vitality-dashboard-tmp:build:production"
+              "buildTarget": "vitality-dashboard:build:production"
             },
             "development": {
-              "buildTarget": "vitality-dashboard-tmp:build:development"
+              "buildTarget": "vitality-dashboard:build:development"
             }
           },
           "defaultConfiguration": "development"
