@@ -1,0 +1,107 @@
+<div class="space-y-6">
+  <div class="flex items-center justify-between">
+    <div>
+      <h1 class="font-headline-md text-on-surface dark:text-stone-200">Alimentos</h1>
+      <p class="font-body-sm text-on-surface-variant dark:text-stone-400 mt-1">Gestiona los alimentos del diccionario</p>
+    </div>
+    <button (click)="openCreate()" class="px-4 py-2.5 bg-primary text-on-primary rounded-xl font-label-sm active:scale-95 transition-transform flex items-center gap-2">
+      <span class="material-symbols-outlined text-lg">add</span> Nuevo
+    </button>
+  </div>
+
+  @if (error) {
+    <div class="bg-error-container dark:bg-red-950/30 text-on-error-container dark:text-red-300 rounded-xl p-3 font-body-sm">{{ error }}</div>
+  }
+
+  @if (showForm) {
+    <div class="bg-white dark:bg-stone-900 rounded-2xl border border-stone-200 dark:border-stone-800 p-6">
+      <h2 class="font-headline-sm text-on-surface dark:text-stone-200 mb-4">{{ editingId() ? 'Editar' : 'Nuevo' }} alimento</h2>
+      <form (ngSubmit)="save()" [formGroup]="form" class="space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="font-label-sm text-on-surface-variant dark:text-stone-400 block mb-1">Nombre *</label>
+            <input formControlName="name" class="w-full px-3 py-2 rounded-lg border border-outline-variant dark:border-stone-700 bg-white dark:bg-stone-800 text-sm dark:text-stone-200 focus:ring-2 focus:ring-primary outline-none" />
+          </div>
+          <div>
+            <label class="font-label-sm text-on-surface-variant dark:text-stone-400 block mb-1">Categoría *</label>
+            <select formControlName="categoryId" class="w-full px-3 py-2 rounded-lg border border-outline-variant dark:border-stone-700 bg-white dark:bg-stone-800 text-sm dark:text-stone-200 focus:ring-2 focus:ring-primary outline-none">
+              @for (c of categories(); track c.id) { <option [value]="c.id">{{ c.name }}</option> }
+            </select>
+          </div>
+          <div class="md:col-span-2">
+            <label class="font-label-sm text-on-surface-variant dark:text-stone-400 block mb-1">Descripción</label>
+            <textarea formControlName="description" rows="2" class="w-full px-3 py-2 rounded-lg border border-outline-variant dark:border-stone-700 bg-white dark:bg-stone-800 text-sm dark:text-stone-200 focus:ring-2 focus:ring-primary outline-none"></textarea>
+          </div>
+          <div>
+            <label class="font-label-sm text-on-surface-variant dark:text-stone-400 block mb-1">Imagen URL</label>
+            <input formControlName="imageUrl" class="w-full px-3 py-2 rounded-lg border border-outline-variant dark:border-stone-700 bg-white dark:bg-stone-800 text-sm dark:text-stone-200 focus:ring-2 focus:ring-primary outline-none" />
+          </div>
+          <div>
+            <label class="font-label-sm text-on-surface-variant dark:text-stone-400 block mb-1">Calorías (por 100g)</label>
+            <input formControlName="caloriesPer100g" type="number" class="w-full px-3 py-2 rounded-lg border border-outline-variant dark:border-stone-700 bg-white dark:bg-stone-800 text-sm dark:text-stone-200 focus:ring-2 focus:ring-primary outline-none" />
+          </div>
+          <div>
+            <label class="font-label-sm text-on-surface-variant dark:text-stone-400 block mb-1">Proteína (g)</label>
+            <input formControlName="proteinG" type="number" step="0.1" class="w-full px-3 py-2 rounded-lg border border-outline-variant dark:border-stone-700 bg-white dark:bg-stone-800 text-sm dark:text-stone-200 focus:ring-2 focus:ring-primary outline-none" />
+          </div>
+          <div>
+            <label class="font-label-sm text-on-surface-variant dark:text-stone-400 block mb-1">Carbohidratos (g)</label>
+            <input formControlName="carbsG" type="number" step="0.1" class="w-full px-3 py-2 rounded-lg border border-outline-variant dark:border-stone-700 bg-white dark:bg-stone-800 text-sm dark:text-stone-200 focus:ring-2 focus:ring-primary outline-none" />
+          </div>
+          <div>
+            <label class="font-label-sm text-on-surface-variant dark:text-stone-400 block mb-1">Grasas (g)</label>
+            <input formControlName="fatG" type="number" step="0.1" class="w-full px-3 py-2 rounded-lg border border-outline-variant dark:border-stone-700 bg-white dark:bg-stone-800 text-sm dark:text-stone-200 focus:ring-2 focus:ring-primary outline-none" />
+          </div>
+          <div>
+            <label class="font-label-sm text-on-surface-variant dark:text-stone-400 block mb-1">Fibra (g)</label>
+            <input formControlName="fiberG" type="number" step="0.1" class="w-full px-3 py-2 rounded-lg border border-outline-variant dark:border-stone-700 bg-white dark:bg-stone-800 text-sm dark:text-stone-200 focus:ring-2 focus:ring-primary outline-none" />
+          </div>
+          <div class="md:col-span-2">
+            <label class="font-label-sm text-on-surface-variant dark:text-stone-400 block mb-1">Beneficios (separados por coma)</label>
+            <input formControlName="benefits" class="w-full px-3 py-2 rounded-lg border border-outline-variant dark:border-stone-700 bg-white dark:bg-stone-800 text-sm dark:text-stone-200 focus:ring-2 focus:ring-primary outline-none" placeholder="Ej: Alto en proteína, Bajo en grasa" />
+          </div>
+          <div class="md:col-span-2">
+            <label class="font-label-sm text-on-surface-variant dark:text-stone-400 block mb-1">Sugerencia de consumo</label>
+            <input formControlName="consumptionTips" class="w-full px-3 py-2 rounded-lg border border-outline-variant dark:border-stone-700 bg-white dark:bg-stone-800 text-sm dark:text-stone-200 focus:ring-2 focus:ring-primary outline-none" />
+          </div>
+        </div>
+        <div class="flex gap-3 pt-2">
+          <button type="submit" [disabled]="loading" class="px-6 py-2.5 bg-primary text-on-primary rounded-xl font-label-sm active:scale-95 disabled:opacity-50">{{ loading ? 'Guardando...' : 'Guardar' }}</button>
+          <button type="button" (click)="showForm = false" class="px-6 py-2.5 bg-stone-100 dark:bg-stone-800 text-on-surface dark:text-stone-200 rounded-xl font-label-sm">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  }
+
+  <!-- Table -->
+  <div class="bg-white dark:bg-stone-900 rounded-2xl border border-stone-200 dark:border-stone-800 overflow-hidden">
+    <table class="w-full text-sm">
+      <thead class="bg-stone-50 dark:bg-stone-800 text-on-surface-variant dark:text-stone-400 font-label-sm uppercase tracking-wider">
+        <tr>
+          <th class="text-left px-4 py-3">Nombre</th>
+          <th class="text-left px-4 py-3 hidden md:table-cell">Categoría</th>
+          <th class="text-left px-4 py-3 hidden md:table-cell">Calorías</th>
+          <th class="text-right px-4 py-3">Acciones</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-stone-100 dark:divide-stone-800">
+        @for (food of foods(); track food.id) {
+          <tr class="hover:bg-stone-50 dark:hover:bg-stone-800/50">
+            <td class="px-4 py-3">
+              <p class="font-label-lg text-on-surface dark:text-stone-200">{{ food.name }}</p>
+              @if (food.primaryBenefit) { <p class="text-xs text-on-surface-variant dark:text-stone-500">{{ food.primaryBenefit }}</p> }
+            </td>
+            <td class="px-4 py-3 hidden md:table-cell text-on-surface-variant dark:text-stone-400">{{ food.categoryName }}</td>
+            <td class="px-4 py-3 hidden md:table-cell text-on-surface-variant dark:text-stone-400">-</td>
+            <td class="px-4 py-3 text-right">
+              <div class="flex justify-end gap-1">
+                <button (click)="editFood(food)" class="p-2 hover:bg-stone-100 dark:hover:bg-stone-700 rounded-lg"><span class="material-symbols-outlined text-sm text-on-surface-variant">edit</span></button>
+                <button (click)="deleteFood(food.id)" class="p-2 hover:bg-red-50 dark:hover:bg-red-950/20 rounded-lg"><span class="material-symbols-outlined text-sm text-error">delete</span></button>
+              </div>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
