@@ -4,7 +4,7 @@
 
 [[redirects]]
   from = "/vitality-api/*"
-  to = "https://vitality-api.onrender.com/vitality-api/v1/:splat"
+  to = "https://api.nutripage.com/vitality-api/v1/:splat"
   status = 200
   force = true
 
@@ -12,6 +12,3 @@
   from = "/*"
   to = "/index.html"
   status = 200
-
-[build.environment]
-  API_URL = "http://localhost:9000/vitality-api/v1"
