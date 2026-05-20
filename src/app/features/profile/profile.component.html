@@ -1,0 +1,35 @@
+<div class="max-w-2xl space-y-8">
+  <div>
+    <h1 class="font-headline-md text-on-surface dark:text-stone-200">Perfil</h1>
+    <p class="font-body-sm text-on-surface-variant dark:text-stone-400 mt-1">Información de administrador</p>
+  </div>
+
+  <div class="bg-white dark:bg-stone-900 rounded-2xl border border-stone-200 dark:border-stone-800 p-6 space-y-6">
+    <div>
+      <p class="font-label-sm text-on-surface-variant dark:text-stone-400 uppercase tracking-wider mb-1">Nombre</p>
+      <p class="font-body-lg text-on-surface dark:text-stone-200">{{ user()?.name }}</p>
+    </div>
+    <div>
+      <p class="font-label-sm text-on-surface-variant dark:text-stone-400 uppercase tracking-wider mb-1">Correo electrónico</p>
+      <p class="font-body-lg text-on-surface dark:text-stone-200">{{ user()?.email }}</p>
+    </div>
+    <div>
+      <p class="font-label-sm text-on-surface-variant dark:text-stone-400 uppercase tracking-wider mb-1">Rol</p>
+      <span class="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full font-label-sm">Administrador</span>
+    </div>
+  </div>
+
+  <div class="bg-white dark:bg-stone-900 rounded-2xl border border-stone-200 dark:border-stone-800 p-6">
+    <h2 class="font-headline-sm text-on-surface dark:text-stone-200 mb-4">Preferencias de tema</h2>
+    <div class="space-y-3">
+      @for (opt of themeModes; track opt.value) {
+        <label (click)="theme.setMode(opt.value)" class="flex items-center gap-4 p-4 bg-stone-50 dark:bg-stone-800 rounded-xl cursor-pointer border-2 transition-colors"
+          [class.border-primary]="theme.mode() === opt.value" [class.border-transparent]="theme.mode() !== opt.value">
+          <span class="material-symbols-outlined text-2xl text-on-surface dark:text-stone-200">{{ opt.icon }}</span>
+          <span class="font-label-lg text-on-surface dark:text-stone-200">{{ opt.label }}</span>
+          @if (theme.mode() === opt.value) { <span class="material-symbols-outlined text-primary ml-auto fill-icon">check_circle</span> }
+        </label>
+      }
+    </div>
+  </div>
+</div>

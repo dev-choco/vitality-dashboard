@@ -1,0 +1,42 @@
+<div class="space-y-6">
+  <div class="flex justify-between"><div><h1 class="font-headline-md text-on-surface dark:text-stone-200">Mitos</h1><p class="font-body-sm text-on-surface-variant dark:text-stone-400 mt-1">{{ myths().length }} mitos</p></div><button (click)="openCreate()" class="px-4 py-2.5 bg-primary text-on-primary rounded-xl font-label-sm active:scale-95 flex items-center gap-2"><span class="material-symbols-outlined text-lg">add</span> Nuevo</button></div>
+
+  @if (showForm) {
+    <div class="bg-white dark:bg-stone-900 rounded-2xl border dark:border-stone-800 p-6">
+      <h2 class="font-headline-sm mb-4">{{ editingId() ? 'Editar' : 'Nuevo' }} mito</h2>
+      <form (ngSubmit)="save()" [formGroup]="form" class="space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div><label class="font-label-sm block mb-1">Mito *</label><input formControlName="mythText" class="w-full px-3 py-2 rounded-lg border border-red-300 dark:border-red-800 bg-white dark:bg-stone-800 text-sm dark:text-stone-200 focus:ring-2 focus:ring-error outline-none" /></div>
+          <div><label class="font-label-sm block mb-1">Realidad *</label><input formControlName="realityText" class="w-full px-3 py-2 rounded-lg border border-green-300 dark:border-green-800 bg-white dark:bg-stone-800 text-sm dark:text-stone-200 focus:ring-2 focus:ring-primary outline-none" /></div>
+          <div class="md:col-span-2"><label class="font-label-sm block mb-1">Explicación del mito</label><textarea formControlName="mythExplanation" rows="2" class="w-full px-3 py-2 rounded-lg border dark:border-stone-700 bg-white dark:bg-stone-800 text-sm dark:text-stone-200 focus:ring-2 focus:ring-primary outline-none"></textarea></div>
+          <div class="md:col-span-2"><label class="font-label-sm block mb-1">Explicación de la realidad</label><textarea formControlName="realityExplanation" rows="2" class="w-full px-3 py-2 rounded-lg border dark:border-stone-700 bg-white dark:bg-stone-800 text-sm dark:text-stone-200 focus:ring-2 focus:ring-primary outline-none"></textarea></div>
+          <div><label class="font-label-sm block mb-1">Categoría</label><input formControlName="category" class="w-full px-3 py-2 rounded-lg border dark:border-stone-700 bg-white dark:bg-stone-800 text-sm dark:text-stone-200 focus:ring-2 focus:ring-primary outline-none" placeholder="Carbohidratos, Hábitos..." /></div>
+          <div><label class="font-label-sm block mb-1">Imagen URL</label><input formControlName="imageUrl" class="w-full px-3 py-2 rounded-lg border dark:border-stone-700 bg-white dark:bg-stone-800 text-sm dark:text-stone-200 focus:ring-2 focus:ring-primary outline-none" /></div>
+          <div class="md:col-span-2"><label class="font-label-sm block mb-1">Fuente científica</label><input formControlName="scientificSource" class="w-full px-3 py-2 rounded-lg border dark:border-stone-700 bg-white dark:bg-stone-800 text-sm dark:text-stone-200 focus:ring-2 focus:ring-primary outline-none" placeholder="Basado en guías de la OMS" /></div>
+        </div>
+        <div class="flex gap-3 pt-2"><button type="submit" [disabled]="loading" class="px-6 py-2.5 bg-primary text-on-primary rounded-xl font-label-sm">{{ loading ? 'Guardando...' : 'Guardar' }}</button><button type="button" (click)="showForm = false" class="px-6 py-2.5 bg-stone-100 dark:bg-stone-800 rounded-xl font-label-sm">Cancelar</button></div>
+      </form>
+    </div>
+  }
+
+  <div class="bg-white dark:bg-stone-900 rounded-2xl border dark:border-stone-800 overflow-hidden">
+    <table class="w-full text-sm">
+      <thead class="bg-stone-50 dark:bg-stone-800 text-on-surface-variant dark:text-stone-400 font-label-sm uppercase tracking-wider">
+        <tr><th class="text-left px-4 py-3">Mito</th><th class="text-left px-4 py-3">Realidad</th><th class="text-left px-4 py-3 hidden md:table-cell">Categoría</th><th class="text-right px-4 py-3">Acciones</th></tr>
+      </thead>
+      <tbody class="divide-y divide-stone-100 dark:divide-stone-800">
+        @for (m of myths(); track m.id) {
+          <tr class="hover:bg-stone-50 dark:hover:bg-stone-800/50">
+            <td class="px-4 py-3 max-w-xs truncate text-on-surface dark:text-stone-200">{{ m.mythText }}</td>
+            <td class="px-4 py-3 max-w-xs truncate text-on-surface dark:text-stone-200">{{ m.realityText }}</td>
+            <td class="px-4 py-3 hidden md:table-cell text-on-surface-variant dark:text-stone-400">{{ m.category }}</td>
+            <td class="px-4 py-3 text-right">
+              <button (click)="editMyth(m)" class="p-2 hover:bg-stone-100 dark:hover:bg-stone-700 rounded-lg"><span class="material-symbols-outlined text-sm">edit</span></button>
+              <button (click)="deleteMyth(m.id)" class="p-2 hover:bg-red-50 dark:hover:bg-red-950/20 rounded-lg"><span class="material-symbols-outlined text-sm text-error">delete</span></button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-stone-100 to-stone-200 dark:from-stone-950 dark:to-stone-900 px-4">
+  <div class="w-full max-w-sm">
+    <div class="text-center mb-8">
+      <div class="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center mx-auto mb-4">
+        <span class="material-symbols-outlined text-3xl text-on-primary">admin_panel_settings</span>
+      </div>
+      <h1 class="font-headline-lg text-on-surface dark:text-stone-200">Vitality</h1>
+      <p class="font-body-sm text-on-surface-variant dark:text-stone-400 mt-1">Panel de administración</p>
+    </div>
+
+    <div class="bg-white dark:bg-stone-900 rounded-2xl shadow-xl p-8">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-5">
+        <div>
+          <label class="font-label-sm text-on-surface-variant dark:text-stone-400 block mb-1.5">Correo electrónico</label>
+          <input formControlName="email" type="email" class="w-full px-4 py-3 rounded-xl border border-outline-variant dark:border-stone-700 bg-surface-container-lowest dark:bg-stone-800 focus:ring-2 focus:ring-primary focus:border-primary outline-none font-body-md dark:text-stone-200 transition-all" placeholder="admin@vitality.com" />
+        </div>
+        <div>
+          <label class="font-label-sm text-on-surface-variant dark:text-stone-400 block mb-1.5">Contraseña</label>
+          <input formControlName="password" type="password" class="w-full px-4 py-3 rounded-xl border border-outline-variant dark:border-stone-700 bg-surface-container-lowest dark:bg-stone-800 focus:ring-2 focus:ring-primary focus:border-primary outline-none font-body-md dark:text-stone-200 transition-all" placeholder="••••••••" />
+        </div>
+
+        @if (error) {
+          <div class="bg-error-container dark:bg-red-950/50 text-on-error-container dark:text-red-300 rounded-xl p-3 font-body-sm flex items-center gap-2">
+            <span class="material-symbols-outlined text-lg">error</span>
+            {{ error }}
+          </div>
+        }
+
+        <button type="submit" [disabled]="form.invalid || loading" class="w-full py-3.5 bg-primary text-on-primary rounded-xl font-label-lg active:scale-[0.98] transition-all disabled:opacity-50 shadow-lg shadow-primary/20">
+          {{ loading ? 'Iniciando sesión...' : 'Iniciar sesión' }}
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
