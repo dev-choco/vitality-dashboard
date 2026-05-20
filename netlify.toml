@@ -1,0 +1,14 @@
+[build]
+  command = "npm run generate-config && npm run build"
+  publish = "dist/vitality-dashboard/browser"
+
+[[redirects]]
+  from = "/vitality-api/*"
+  to = "https://api.nutripage.com/vitality-api/v1/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
